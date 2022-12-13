@@ -23,3 +23,22 @@ export const HeaderContainer = styled.header`
     background: ${({ theme }) => theme['green-300']};
   }
 `;
+
+export const NavContainer = styled.nav`
+  display: flex;
+
+  ul {
+    display: flex;
+    gap: 1rem;
+
+    li {
+      a {
+        color: ${({ theme }) => theme.white};
+
+        &:hover {
+          color: ${({ theme }) => theme['green-500']};
+        }
+      }
+    }
+  }
+`;

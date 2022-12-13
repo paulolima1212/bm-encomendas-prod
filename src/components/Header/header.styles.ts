@@ -20,7 +20,7 @@ export const HeaderContainer = styled.header`
     width: 5rem;
     border-radius: 50%;
     color: ${({ theme }) => theme.white};
-    background: ${({ theme }) => theme['green-300']};
+    background: ${({ theme }) => theme['green-500']};
   }
 `;
 

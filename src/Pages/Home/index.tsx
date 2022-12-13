@@ -1,7 +1,9 @@
+import { HomeContainer } from './home.styles';
+
 export function Home() {
   return (
-    <div>
+    <HomeContainer>
       <h1>Tela encomendas</h1>
-    </div>
+    </HomeContainer>
   );
 }

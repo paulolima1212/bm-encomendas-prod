@@ -111,6 +111,10 @@ export const WarperTableContainer = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   gap: 2rem;
+
+  a {
+    color: ${({ theme }) => theme['green-500']};
+  }
 `;
 
 export const WaperFields = styled.div`

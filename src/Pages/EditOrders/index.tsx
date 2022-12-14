@@ -33,6 +33,7 @@ import {
 } from 'phosphor-react';
 import { createNewOrder } from '../../services/Http/createOrder';
 import { getMaxOrderId } from '../../services/Http/getOrderId';
+import { useParams } from 'react-router-dom';
 
 interface NewProdcutProps {
   id: string;
@@ -51,7 +52,11 @@ export interface NewOrderProps {
   statusOrder: 'pendente' | 'cancelada' | 'entregue';
 }
 
-export function NewOrder() {
+export function EditOrder() {
+  const idOrder = useParams();
+
+  console.log(idOrder);
+
   const newOrderSchema = z.object({
     name: z.string(),
     phone: z.string(),
@@ -88,7 +93,7 @@ export function NewOrder() {
     }
   }
 
-  async function handleCreateNewOrder(data: NewOrderInputs) {
+  async function handleUpdateOrder(data: NewOrderInputs) {
     const maxOrderId = await getMaxOrderId();
     const activeOrder: NewOrderProps = {
       id: maxOrderId,
@@ -177,8 +182,8 @@ export function NewOrder() {
 
   return (
     <WaperContainer>
-      <Header title='Bolacha Maria - Registo Encomendas' />
-      <form id='orderForm' onSubmit={handleSubmit(handleCreateNewOrder)}>
+      <Header title='Bolacha Maria - Editar Encomenda' />
+      <form id='orderForm' onSubmit={handleSubmit(handleUpdateOrder)}>
         <FieldsContainer>
           <h3>Dados encomenda</h3>
           <div>

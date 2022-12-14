@@ -44,7 +44,7 @@ interface NewProdcutProps {
 
 export interface NewOrderProps {
   id: number;
-  name: string;
+  client: string;
   contact: string;
   dateDelivery: string;
   products: NewProdcutProps[];
@@ -92,7 +92,7 @@ export function NewOrder() {
     const maxOrderId = await getMaxOrderId();
     const activeOrder: NewOrderProps = {
       id: maxOrderId,
-      name: data.name,
+      client: data.name,
       contact: data.phone,
       dateDelivery: data.dateTime,
       products: order,
@@ -117,11 +117,15 @@ export function NewOrder() {
     setQuantity(Number(quantity.value));
   }
 
-  function handleAddProductInCart() {
+  async function handleAddProductInCart() {
     const descriptionProduct =
       descPrincipal.current!.value + ' - ' + descVariant.current!.value;
     const weightProduct = peso.current!.value;
     const priceProduct = price.current!.value;
+
+    const idOrder: number = await getMaxOrderId();
+
+    setIdActiveOrder(idOrder);
 
     if (
       descriptionProduct !== '' &&

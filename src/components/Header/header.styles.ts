@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
   width: 100%;
@@ -9,7 +9,7 @@ export const HeaderContainer = styled.header`
 
   h1 {
     color: ${({ theme }) => theme.white};
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
   }
 
   span {
@@ -20,7 +20,7 @@ export const HeaderContainer = styled.header`
     width: 5rem;
     border-radius: 50%;
     color: ${({ theme }) => theme.white};
-    background: ${({ theme }) => theme['green-500']};
+    background: ${({ theme }) => theme["green-500"]};
   }
 `;
 
@@ -36,7 +36,7 @@ export const NavContainer = styled.nav`
         color: ${({ theme }) => theme.white};
 
         &:hover {
-          color: ${({ theme }) => theme['green-500']};
+          color: ${({ theme }) => theme["green-500"]};
         }
       }
     }

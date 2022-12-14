@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -20,7 +20,7 @@ html{
 
 body{
  min-height: 100vh;
- background: ${({ theme }) => theme['gray-700']};
+ background: ${({ theme }) => theme["gray-700"]};
 }
 
 body, input, button, textarea{

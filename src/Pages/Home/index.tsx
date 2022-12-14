@@ -31,11 +31,13 @@ import {
   PencilLine,
   FloppyDisk,
 } from 'phosphor-react';
+import { createNewOrder } from '../../services/Http/createOrder';
+import { getMaxOrderId } from '../../services/Http/getOrderId';
 
 interface NewProdcutProps {
   id: string;
-  product: string;
-  pesoProduct: string;
+  description: string;
+  weight: string;
   quantity: number;
   price: string;
 }
@@ -43,8 +45,8 @@ interface NewProdcutProps {
 export interface NewOrderProps {
   id: number;
   name: string;
-  phone: string;
-  dateTime: string;
+  contact: string;
+  dateDelivery: string;
   products: NewProdcutProps[];
   statusOrder: 'pendente' | 'cancelada' | 'entregue';
 }
@@ -86,15 +88,18 @@ export function NewOrder() {
     }
   }
 
-  function handleCreateNewOrder(data: NewOrderInputs) {
+  async function handleCreateNewOrder(data: NewOrderInputs) {
+    const maxOrderId = await getMaxOrderId();
     const activeOrder: NewOrderProps = {
-      id: idActiveOrder,
+      id: maxOrderId,
       name: data.name,
-      phone: data.phone,
-      dateTime: data.dateTime,
+      contact: data.phone,
+      dateDelivery: data.dateTime,
       products: order,
       statusOrder: data.status,
     };
+
+    createNewOrder(activeOrder);
 
     setNewOrder(activeOrder);
     setIdActiveOrder(0);
@@ -126,9 +131,9 @@ export function NewOrder() {
     ) {
       const newItem: NewProdcutProps = {
         id: cuid(),
-        pesoProduct: weightProduct,
+        weight: weightProduct,
         price: priceProduct,
-        product: descriptionProduct,
+        description: descriptionProduct,
         quantity,
       };
 
@@ -152,9 +157,9 @@ export function NewOrder() {
     const newList = order.filter((item) => item.id !== id);
     order.filter((item) => {
       if (item.id === id) {
-        descPrincipal.current!.value = item.product.split('-')[0];
-        descVariant.current!.value = item.product.split('-')[1];
-        peso.current!.value = item.pesoProduct;
+        descPrincipal.current!.value = item.description.split('-')[0];
+        descVariant.current!.value = item.description.split('-')[1];
+        peso.current!.value = item.weight;
         price.current!.value = item.price;
         setQuantity(item.quantity);
       }
@@ -333,8 +338,8 @@ export function NewOrder() {
               {order.map((item) => {
                 return (
                   <tr key={item.id}>
-                    <td>{item.product}</td>
-                    <td>{item.pesoProduct}</td>
+                    <td>{item.description}</td>
+                    <td>{item.weight}</td>
                     <td>{item.price}</td>
                     <td>{item.quantity}</td>
                     <td>

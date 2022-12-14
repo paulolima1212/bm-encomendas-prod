@@ -1,6 +1,7 @@
 import { PencilSimpleLine, SignOut, Trash } from 'phosphor-react';
 import { useEffect, useState } from 'react';
 import { Header } from '../../components/Header';
+import { getAllOrder } from '../../services/Http/getAllOrders';
 import { NewOrderProps } from '../Home';
 import {
   ButtonContainer,
@@ -13,12 +14,13 @@ import {
 export function ConsultOrders() {
   const [orders, setOrders] = useState<NewOrderProps[]>([]);
 
-  useEffect(() => {
-    const ordersJSON = localStorage.getItem('@bolachamaria:encomendas');
+  async function getOrders() {
+    const data = await getAllOrder();
+    setOrders(data);
+  }
 
-    if (ordersJSON!.length > 0) {
-      setOrders(JSON.parse(ordersJSON!));
-    }
+  useEffect(() => {
+    getOrders();
   }, []);
 
   return (
@@ -68,9 +70,9 @@ export function ConsultOrders() {
               return (
                 <tr key={item.id}>
                   <td>Nº {item.id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.phone}</td>
-                  <td>{item.dateTime}</td>
+                  <td>{item.client}</td>
+                  <td>{item.contact}</td>
+                  <td>{item.dateDelivery}</td>
                   <td>
                     <StatusContainer statusColor={item.statusOrder}>
                       {item.statusOrder}

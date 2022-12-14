@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const WaperContainer = styled.div`
   height: 100vh;
   width: 100%;
-  background: ${({ theme }) => theme["gray-400"]};
+  background: ${({ theme }) => theme['gray-400']};
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -21,7 +21,7 @@ export const FieldsContainer = styled.div`
     display: flex;
     align-items: center;
     border-radius: 5px;
-    background: ${({ theme }) => theme["gray-600"]};
+    background: ${({ theme }) => theme['gray-600']};
     color: ${({ theme }) => theme.white};
     gap: 4rem;
     padding: 1rem;
@@ -41,7 +41,7 @@ export const WarperTableContainer = styled.div`
   width: 100%;
   color: ${({ theme }) => theme.white};
   padding: 0rem 3rem;
-  background: ${({ theme }) => theme["gray-600"]};
+  background: ${({ theme }) => theme['gray-600']};
   border-radius: 8px;
 
   table {
@@ -55,11 +55,11 @@ export const WarperTableContainer = styled.div`
     }
 
     th {
-      background: ${({ theme }) => theme["gray-500"]};
+      background: ${({ theme }) => theme['gray-500']};
       padding: 1rem;
       padding-left: 2rem;
       text-align: left;
-      color: ${({ theme }) => theme["gray-600"]};
+      color: ${({ theme }) => theme['gray-600']};
       font-weight: 900;
       font-size: 1.2rem;
       line-height: 1.6;
@@ -77,8 +77,8 @@ export const WarperTableContainer = styled.div`
     }
 
     td {
-      background: ${({ theme }) => theme["gray-300"]};
-      border-top: 4px solid ${({ theme }) => theme["gray-800"]};
+      background: ${({ theme }) => theme['gray-300']};
+      border-top: 4px solid ${({ theme }) => theme['gray-800']};
       padding: 1rem;
       font-size: 1.6rem;
       line-height: 1.6;
@@ -97,7 +97,7 @@ export const WarperTableContainer = styled.div`
       input {
         background: transparent;
         border: 0;
-        border-bottom: solid 1px ${({ theme }) => theme["gray-800"]};
+        border-bottom: solid 1px ${({ theme }) => theme['gray-800']};
         margin-left: 1rem;
       }
 
@@ -117,7 +117,7 @@ export const WarperTableContainer = styled.div`
         border: none;
         background: transparent;
         cursor: pointer;
-        color: ${({ theme }) => theme["green-500"]};
+        color: ${({ theme }) => theme['green-500']};
         font-weight: 800;
       }
     }
@@ -135,7 +135,7 @@ export const TableContainer = styled.div`
 const BaseInputField = styled.input`
   height: 3.2rem;
   border-radius: 4px;
-  background: ${({ theme }) => theme["gray-300"]};
+  background: ${({ theme }) => theme['gray-300']};
   border: 0;
   border-bottom: solid 4px transparent;
   padding: 1rem;
@@ -143,29 +143,29 @@ const BaseInputField = styled.input`
 
 export const InputIDContainer = styled(BaseInputField)`
   width: 8rem;
-  background: ${({ theme }) => theme["gray-400"]};
+  background: ${({ theme }) => theme['gray-400']};
 `;
 
 interface InputFieldsContainerProps {
-  variant?: "15rem" | "20rem" | "25rem";
+  variant?: '15rem' | '20rem' | '25rem';
 }
 
 export const InputContainer = styled(BaseInputField)<InputFieldsContainerProps>`
   width: ${({ variant }) => variant};
-  background: ${({ theme }) => theme["gray-300"]};
+  background: ${({ theme }) => theme['gray-300']};
 `;
 
 export const InputQuantityContainer = styled.input`
   height: 3.2rem;
   width: 2rem;
-  background: ${({ theme }) => theme["gray-300"]};
+  background: ${({ theme }) => theme['gray-300']};
   text-align: center;
 `;
 
 export const InputPesoContainer = styled.input`
   height: 3.2rem;
   width: 2rem;
-  background: ${({ theme }) => theme["gray-300"]};
+  background: ${({ theme }) => theme['gray-300']};
   text-align: center;
 `;
 
@@ -176,7 +176,7 @@ export const ButtonCriarEncomendaContainer = styled.button`
   border-radius: 8px;
   border: none;
   padding: 1rem 1rem;
-  background: ${({ theme }) => theme["green-500"]};
+  background: ${({ theme }) => theme['green-500']};
   color: ${({ theme }) => theme.white};
   font-weight: 800;
   gap: 0.5rem;
@@ -215,6 +215,9 @@ export const ButtonContainer = styled.div`
 export const FieldsItemContainer = styled.div`
   padding: 2rem 0;
   gap: 0.8rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 
   & .buttons {
     width: 10rem;
@@ -225,7 +228,7 @@ export const FieldsItemContainer = styled.div`
     button {
       border: none;
       background: transparent;
-      color: ${({ theme }) => theme["green-500"]};
+      color: ${({ theme }) => theme['green-500']};
     }
 
     input {
@@ -235,7 +238,7 @@ export const FieldsItemContainer = styled.div`
       border-bottom: solid 2px transparent;
 
       &:focus {
-        border-color: ${({ theme }) => theme["green-500"]};
+        border-color: ${({ theme }) => theme['green-500']};
       }
     }
   }
@@ -245,15 +248,16 @@ export const FieldsItemContainer = styled.div`
     gap: 2rem;
     padding: 1.5rem 1rem;
     width: 100%;
-    background: ${({ theme }) => theme["gray-500"]};
+    background: ${({ theme }) => theme['gray-500']};
     border-radius: 5px;
+    overflow: scroll;
   }
 `;
 
 const BaseInput = styled.input`
   border-radius: 5px;
   border: none;
-  background: ${({ theme }) => theme["gray-300"]};
+  background: ${({ theme }) => theme['gray-300']};
   border-bottom: solid 2px transparent;
 `;
 

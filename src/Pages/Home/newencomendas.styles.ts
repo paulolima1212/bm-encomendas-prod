@@ -205,11 +205,22 @@ export const WaperButtonContainer = styled.div`
 
 export const ButtonContainer = styled.div`
   display: flex;
+  flex: 1;
+  width: 10rem;
+  height: 5rem;
   justify-content: center;
   align-items: center;
   padding-bottom: 1.5rem;
   padding-right: 1rem;
   gap: 2rem;
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const FieldsItemContainer = styled.div`

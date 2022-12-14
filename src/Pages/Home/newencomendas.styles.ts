@@ -130,6 +130,9 @@ export const TableContainer = styled.div`
   flex-direction: column;
   overflow: scroll;
   border-radius: 5px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const BaseInputField = styled.input`
@@ -210,8 +213,6 @@ export const ButtonContainer = styled.div`
   height: 5rem;
   justify-content: center;
   align-items: center;
-  padding-bottom: 1.5rem;
-  padding-right: 1rem;
   gap: 2rem;
 
   button {
@@ -229,6 +230,8 @@ export const FieldsItemContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   & .buttons {
     width: 10rem;
@@ -262,6 +265,15 @@ export const FieldsItemContainer = styled.div`
     background: ${({ theme }) => theme['gray-500']};
     border-radius: 5px;
     overflow: scroll;
+    align-items: center;
+    justify-content: center;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    & > input {
+      height: 4rem;
+    }
   }
 `;
 

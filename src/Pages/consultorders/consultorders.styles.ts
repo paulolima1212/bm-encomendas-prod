@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const WaperContainer = styled.div`
   display: flex;
@@ -8,7 +8,7 @@ export const WaperContainer = styled.div`
   padding: 2rem;
 
   h1 {
-    color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.white};
   }
 `;
 
@@ -17,7 +17,7 @@ export const WarperTableContainer = styled.div`
   width: 100%;
   color: ${({ theme }) => theme.white};
   padding: 2rem 1rem;
-  background: ${({ theme }) => theme["gray-400"]};
+  background: ${({ theme }) => theme['gray-400']};
   border-radius: 8px;
 
   table {
@@ -31,11 +31,11 @@ export const WarperTableContainer = styled.div`
     }
 
     th {
-      background: ${({ theme }) => theme["gray-500"]};
+      background: ${({ theme }) => theme['gray-500']};
       padding: 1rem;
       padding-left: 2rem;
       text-align: left;
-      color: ${({ theme }) => theme["gray-600"]};
+      color: ${({ theme }) => theme['gray-600']};
       font-weight: 900;
       font-size: 1.2rem;
       line-height: 1.6;
@@ -61,8 +61,8 @@ export const WarperTableContainer = styled.div`
     }
 
     td {
-      background: ${({ theme }) => theme["gray-300"]};
-      border-top: 4px solid ${({ theme }) => theme["gray-800"]};
+      background: ${({ theme }) => theme['gray-300']};
+      border-top: 4px solid ${({ theme }) => theme['gray-800']};
       padding: 1rem;
       font-size: 1.6rem;
       line-height: 1.6;
@@ -81,7 +81,7 @@ export const WarperTableContainer = styled.div`
       input {
         background: transparent;
         border: 0;
-        border-bottom: solid 1px ${({ theme }) => theme["gray-800"]};
+        border-bottom: solid 1px ${({ theme }) => theme['gray-800']};
         margin-left: 1rem;
       }
 
@@ -101,7 +101,7 @@ export const WarperTableContainer = styled.div`
         border: none;
         background: transparent;
         cursor: pointer;
-        color: ${({ theme }) => theme["green-500"]};
+        color: ${({ theme }) => theme['green-500']};
         font-weight: 800;
       }
     }
@@ -117,15 +117,19 @@ export const WaperFields = styled.div`
   display: flex;
   gap: 0.8rem;
 
+  span {
+    cursor: pointer;
+  }
+
   & > input {
     max-width: 8rem;
   }
 `;
 
 const STATUS_COLOR = {
-  entregue: "green-500",
-  pendente: "yellow",
-  cancelada: "danger",
+  entregue: 'green-500',
+  pendente: 'yellow',
+  cancelada: 'danger',
 } as const;
 
 interface StatusContainerProps {
@@ -139,7 +143,7 @@ export const StatusContainer = styled.span<StatusContainerProps>`
   margin-left: 1rem;
   gap: 1rem;
   &::before {
-    content: "";
+    content: '';
     height: 1.5rem;
     width: 1.5rem;
     border-radius: 999px;

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -8,11 +8,13 @@ export const GlobalStyle = createGlobalStyle`
  box-sizing: border-box;
  text-decoration: none;
  list-style: none;
+ 
 }
 
 :focus{
  outline: none;
 }
+
 
 html{
  font-size: 62.5%;
@@ -20,7 +22,7 @@ html{
 
 body{
  min-height: 100vh;
- background: ${({ theme }) => theme["gray-700"]};
+ background: ${({ theme }) => theme['gray-700']};
 }
 
 body, input, button, textarea{

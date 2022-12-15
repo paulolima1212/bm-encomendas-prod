@@ -9,6 +9,7 @@ import React, {
 import { Link } from 'react-router-dom';
 import { Header } from '../../../components/Header';
 import { useOrdersContext } from '../../../hooks/useOrdersContext';
+import { deleteOrderById } from '../../../services/Http/deleteOrder';
 import { getAllOrder } from '../../../services/Http/getAllOrders';
 import { NewOrderProps } from '../../Home';
 import { ModalListOrders } from '../components/Modal/modal';
@@ -49,6 +50,11 @@ export function ListOrders() {
     activeInput.classList.toggle('active');
   }
 
+  function handleDeleteOrder(id: number) {
+    deleteOrderById(id);
+    window.location.reload();
+  }
+
   useEffect(() => {
     getOrders();
   }, [filter]);
@@ -81,11 +87,11 @@ export function ListOrders() {
                   <Scroll size={20} onClick={handleSetStatusModal} />
                 </button>
                 <button>
-                  <Link to={`/editorder?${item.id}`}>
+                  <Link to={`/editorder/${item.id}`}>
                     <PencilSimpleLine size={20} />
                   </Link>
                 </button>
-                <button>
+                <button onClick={() => handleDeleteOrder(item.id)}>
                   <Trash size={20} />
                 </button>
               </ButtonContainer>

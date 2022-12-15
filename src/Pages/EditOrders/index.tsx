@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Header } from '../../components/Header';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -31,9 +31,9 @@ import {
   PencilLine,
   FloppyDisk,
 } from 'phosphor-react';
-import { createNewOrder } from '../../services/Http/createOrder';
-import { getMaxOrderId } from '../../services/Http/getOrderId';
-import { useParams } from 'react-router-dom';
+import { redirect, useNavigate, useParams } from 'react-router-dom';
+import { getOrderById } from '../../services/Http/getOrderById';
+import { updateOrderById } from '../../services/Http/updateOrder';
 
 interface NewProdcutProps {
   id: string;
@@ -49,13 +49,21 @@ export interface NewOrderProps {
   contact: string;
   dateDelivery: string;
   products: NewProdcutProps[];
-  statusOrder: 'pendente' | 'cancelada' | 'entregue';
+  statusOrder: string;
+}
+
+interface DataClientProps {
+  id: number;
+  name: string;
+  contact: string;
+  date: string;
+  status: string;
 }
 
 export function EditOrder() {
   const idOrder = useParams();
 
-  console.log(idOrder);
+  const navigate = useNavigate();
 
   const newOrderSchema = z.object({
     name: z.string(),
@@ -70,6 +78,7 @@ export function EditOrder() {
   const [order, setOrder] = useState<NewProdcutProps[]>([]);
   const [idActiveOrder, setIdActiveOrder] = useState(0);
   const [newOrder, setNewOrder] = useState<NewOrderProps | null>(null);
+  const [dataClient, setDataClient] = useState({} as DataClientProps);
 
   const descPrincipal = useRef<HTMLInputElement>(null);
   const descVariant = useRef<HTMLInputElement>(null);
@@ -79,6 +88,9 @@ export function EditOrder() {
   const { register, handleSubmit, reset } = useForm<NewOrderInputs>({
     resolver: zodResolver(newOrderSchema),
     defaultValues: {
+      name: dataClient.name,
+      phone: dataClient.contact,
+      dateTime: dataClient.date,
       status: 'pendente',
     },
   });
@@ -93,28 +105,48 @@ export function EditOrder() {
     }
   }
 
-  async function handleUpdateOrder(data: NewOrderInputs) {
-    const maxOrderId = await getMaxOrderId();
-    const activeOrder: NewOrderProps = {
-      id: maxOrderId,
-      client: data.name,
-      contact: data.phone,
-      dateDelivery: data.dateTime,
-      products: order,
-      statusOrder: data.status,
+  function handleChangeNameClient(e: ChangeEvent<HTMLInputElement>) {
+    setDataClient((prev) => ({ ...prev, name: e.target.value }));
+  }
+  function handleChangeContactClient(e: ChangeEvent<HTMLInputElement>) {
+    setDataClient((prev) => ({ ...prev, contact: e.target.value }));
+  }
+  function handleChangeDateClient(e: ChangeEvent<HTMLInputElement>) {
+    setDataClient((prev) => ({ ...prev, date: e.target.value }));
+  }
+  function handleChangeStatusClient(e: ChangeEvent<HTMLInputElement>) {
+    setDataClient((prev) => ({ ...prev, status: e.target.value }));
+  }
+
+  async function handleSetActiveOrder() {
+    const orderToEdit = await getOrderById(String(idOrder.id));
+    setNewOrder(orderToEdit);
+    //@ts-ignore
+    setOrder(orderToEdit.orders_products);
+    const newClient: DataClientProps = {
+      id: orderToEdit.id,
+      name: orderToEdit.client,
+      contact: orderToEdit.contact,
+      date: orderToEdit.dateDelivery,
+      status: orderToEdit.statusOrder,
     };
 
-    createNewOrder(activeOrder);
+    setDataClient(newClient);
+  }
 
-    setNewOrder(activeOrder);
-    setIdActiveOrder(0);
-    setOrder([]);
-    reset();
-    descPrincipal.current!.value = '';
-    descVariant.current!.value = '';
-    peso.current!.value = '';
-    price.current!.value = '';
-    setQuantity(0);
+  async function handleUpdateOrder(e: any) {
+    const activeOrder: NewOrderProps = {
+      id: dataClient.id,
+      client: dataClient.name,
+      contact: dataClient.contact,
+      dateDelivery: dataClient.date,
+      products: order,
+      statusOrder: dataClient.status,
+    };
+
+    updateOrderById(String(dataClient.id), activeOrder);
+
+    return navigate('/resumoencomendas');
   }
 
   function handleChangeQuantity() {
@@ -128,7 +160,7 @@ export function EditOrder() {
     const weightProduct = peso.current!.value;
     const priceProduct = price.current!.value;
 
-    const idOrder: number = await getMaxOrderId();
+    const idOrder = dataClient.id;
 
     setIdActiveOrder(idOrder);
 
@@ -178,19 +210,21 @@ export function EditOrder() {
     setOrder(newList);
   }
 
-  const isButtonSaveOrderActive = order.length === 0;
+  useEffect(() => {
+    handleSetActiveOrder();
+  }, []);
 
   return (
     <WaperContainer>
       <Header title='Bolacha Maria - Editar Encomenda' />
-      <form id='orderForm' onSubmit={handleSubmit(handleUpdateOrder)}>
+      <form id='orderForm'>
         <FieldsContainer>
           <h3>Dados encomenda</h3>
           <div>
             <label htmlFor='num_encomenda'>
               <span>Nº Encomenda</span>
               <InputIDContainer
-                value={idActiveOrder}
+                value={dataClient.id}
                 readOnly
                 id='num_encomenda'
               />
@@ -201,7 +235,8 @@ export function EditOrder() {
                 type='text'
                 variant='15rem'
                 id='nome_cliente'
-                {...register('name')}
+                onChange={handleChangeNameClient}
+                value={dataClient.name}
               />
             </label>
             <label htmlFor='telemovel'>
@@ -210,7 +245,8 @@ export function EditOrder() {
                 type='number'
                 id='telemovel'
                 variant='15rem'
-                {...register('phone')}
+                onChange={handleChangeContactClient}
+                value={dataClient.contact}
               />
             </label>
             <label htmlFor='data_entrega'>
@@ -219,7 +255,8 @@ export function EditOrder() {
                 type='datetime-local'
                 id='data_entrega'
                 variant='20rem'
-                {...register('dateTime')}
+                onChange={handleChangeDateClient}
+                value={dataClient.date}
               />
             </label>
 
@@ -236,7 +273,8 @@ export function EditOrder() {
                 id='status'
                 variant='15rem'
                 list='status-order'
-                {...register('status')}
+                onChange={handleChangeStatusClient}
+                value={dataClient.status}
               />
             </label>
           </div>
@@ -270,11 +308,7 @@ export function EditOrder() {
         </datalist>
 
         <FieldsItemContainer>
-          <ButtonCriarEncomendaContainer
-            disabled={!!isButtonSaveOrderActive}
-            form='orderForm'
-            type='submit'
-          >
+          <ButtonCriarEncomendaContainer onClick={handleUpdateOrder}>
             <FloppyDisk size={25} /> Salvar encomenda
           </ButtonCriarEncomendaContainer>
           <h3>Novo item</h3>

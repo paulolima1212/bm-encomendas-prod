@@ -10,7 +10,7 @@ import {
 export interface ListProducts {
   description: string;
   weight: string;
-  quantity: string;
+  'sum(op.quantity)': string;
   'left(o.dateDelivery, 10)': string;
 }
 
@@ -48,7 +48,7 @@ export function Production() {
                   <tr key={product['left(o.dateDelivery, 10)']}>
                     <td>{product.description}</td>
                     <td>{product.weight}</td>
-                    <td>{product.quantity}</td>
+                    <td>{product['sum(op.quantity)']}</td>
                     <td>{product['left(o.dateDelivery, 10)']}</td>
                   </tr>
                 );

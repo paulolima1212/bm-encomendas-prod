@@ -37,6 +37,7 @@ export function ListOrders() {
 
   async function getOrders() {
     const data = await getAllOrder();
+    console.log(data);
     setOrders(data);
   }
 
@@ -78,6 +79,7 @@ export function ListOrders() {
             <td>{item.client}</td>
             <td>{item.contact}</td>
             <td>{item.dateDelivery}</td>
+            <td>100</td>
             <td>
               <StatusContainer statusColor={item.statusOrder}>
                 {item.statusOrder}
@@ -148,6 +150,17 @@ export function ListOrders() {
               <th>
                 <WaperFields>
                   <span onClick={handleActiveFilter}>Recolha</span>
+                  <input
+                    ref={dateDelivery}
+                    type='text'
+                    className='filterField'
+                    onChange={handleSetFilter}
+                  />
+                </WaperFields>
+              </th>
+              <th>
+                <WaperFields>
+                  <span onClick={handleActiveFilter}>Total</span>
                   <input
                     ref={dateDelivery}
                     type='text'

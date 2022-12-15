@@ -1,4 +1,4 @@
-import { House, Scroll } from 'phosphor-react';
+import { ClipboardText, House, Scroll } from 'phosphor-react';
 import { Link } from 'react-router-dom';
 import { HeaderContainer, NavContainer } from './header.styles';
 
@@ -20,6 +20,11 @@ export function Header({ title }: HeaderProps) {
           <li>
             <Link to={'/resumoencomendas'}>
               <Scroll size={32} />
+            </Link>
+          </li>
+          <li>
+            <Link to={'/listaproducao'}>
+              <ClipboardText size={32} />
             </Link>
           </li>
         </ul>

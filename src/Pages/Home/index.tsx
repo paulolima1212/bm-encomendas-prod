@@ -33,6 +33,8 @@ import {
 } from 'phosphor-react';
 import { createNewOrder } from '../../services/Http/createOrder';
 import { getMaxOrderId } from '../../services/Http/getOrderId';
+import { getAllProducts } from '../../services/Http/getAllProducts';
+import { getAllProductsVariant } from '../../services/Http/getProductsVariant';
 
 interface NewProdcutProps {
   id: string;
@@ -40,6 +42,19 @@ interface NewProdcutProps {
   weight: string;
   quantity: number;
   price: string;
+}
+
+export interface ListProductsProps {
+  type: string;
+}
+
+export interface ProductsVariantProps {
+  id: number;
+  price: string;
+  type: string;
+  unit: string;
+  variant: string;
+  weight: string;
 }
 
 export interface NewOrderProps {
@@ -65,6 +80,10 @@ export function NewOrder() {
   const [order, setOrder] = useState<NewProdcutProps[]>([]);
   const [idActiveOrder, setIdActiveOrder] = useState(0);
   const [newOrder, setNewOrder] = useState<NewOrderProps | null>(null);
+  const [listProducts, setListProducts] = useState<ListProductsProps[]>([]);
+  const [listVariantProducts, setListVariantProducts] = useState<
+    ProductsVariantProps[]
+  >([]);
 
   const descPrincipal = useRef<HTMLInputElement>(null);
   const descVariant = useRef<HTMLInputElement>(null);
@@ -175,6 +194,22 @@ export function NewOrder() {
 
   const isButtonSaveOrderActive = order.length === 0;
 
+  async function handleGetListProducts() {
+    const newListProducts = await getAllProducts();
+
+    setListProducts(newListProducts);
+  }
+
+  async function handleGetProductsVariant(variant: string) {
+    const productsVariants = await getAllProductsVariant(variant);
+
+    setListVariantProducts(productsVariants);
+  }
+
+  useEffect(() => {
+    handleGetListProducts();
+  }, []);
+
   return (
     <WaperContainer>
       <Header title='Bolacha Maria - Registo Encomendas' />
@@ -238,30 +273,26 @@ export function NewOrder() {
         </FieldsContainer>
       </form>
       <WarperTableContainer>
-        <datalist id='products'>
-          <option value='Chocolate' />
-          <option value='Tradicional' />
-          <option value='Chocolate branco' />
-        </datalist>
+        <datalist id='products'></datalist>
         <datalist id='peso'>
-          <option value='1.5kg' />
-          <option value='1kg' />
-          <option value='500g' />
+          {listVariantProducts.map((product) => {
+            return <option value={product.weight} />;
+          })}
         </datalist>
         <datalist id='description'>
-          <option value='Bolo rei' />
-          <option value='Pão de ló' />
-          <option value='Rabanada' />
+          {listProducts.map((product) => {
+            return <option value={product.type} />;
+          })}
         </datalist>
         <datalist id='variant'>
-          <option value='Chocolate' />
-          <option value='tradicional' />
-          <option value='nutella' />
+          {listVariantProducts.map((product) => {
+            return <option value={product.variant} />;
+          })}
         </datalist>
         <datalist id='price'>
-          <option value='19.99€' />
-          <option value='18.99€' />
-          <option value='17.99€' />
+          {listVariantProducts.map((product) => {
+            return <option value={product.price.split(' ')[0]} />;
+          })}
         </datalist>
 
         <FieldsItemContainer>
@@ -278,6 +309,9 @@ export function NewOrder() {
               ref={descPrincipal}
               type='text'
               list='description'
+              onChange={() =>
+                handleGetProductsVariant(descPrincipal.current!.value)
+              }
             />
             <InputContainerBigger
               ref={descVariant}

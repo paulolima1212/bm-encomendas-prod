@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Header } from '../../../components/Header';
 import { useOrdersContext } from '../../../hooks/useOrdersContext';
 import { deleteOrderById } from '../../../services/Http/deleteOrder';
@@ -33,6 +33,8 @@ export function ListOrders() {
   const [orders, setOrders] = useState<NewOrderProps[]>([]);
   const [filter, setFilter] = useState('');
 
+  const navigate = useNavigate();
+
   async function getOrders() {
     const data = await getAllOrder();
     setOrders(data);
@@ -52,7 +54,7 @@ export function ListOrders() {
 
   function handleDeleteOrder(id: number) {
     deleteOrderById(id);
-    window.location.reload();
+    return navigate('/');
   }
 
   useEffect(() => {

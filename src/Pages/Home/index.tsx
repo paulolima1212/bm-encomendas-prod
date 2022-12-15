@@ -36,7 +36,7 @@ import { getMaxOrderId } from '../../services/Http/getOrderId';
 import { getAllProducts } from '../../services/Http/getAllProducts';
 import { getAllProductsVariant } from '../../services/Http/getProductsVariant';
 
-interface NewProdcutProps {
+export interface NewProdcutProps {
   id: string;
   description: string;
   weight: string;

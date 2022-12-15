@@ -37,7 +37,6 @@ export function ListOrders() {
 
   async function getOrders() {
     const data = await getAllOrder();
-    console.log(data);
     setOrders(data);
   }
 
@@ -88,7 +87,10 @@ export function ListOrders() {
             <td>
               <ButtonContainer>
                 <button>
-                  <Scroll size={20} onClick={handleSetStatusModal} />
+                  <Scroll
+                    size={20}
+                    onClick={() => handleSetStatusModal(item)}
+                  />
                 </button>
                 <button>
                   <Link to={`/editorder/${item.id}`}>

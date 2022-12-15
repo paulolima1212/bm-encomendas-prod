@@ -27,9 +27,13 @@ export function OrderContextProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState({} as NewOrderProps);
 
   async function handleSetStatusModal(item: DataEncomenda) {
-    setIsModalActive((prev) => !prev);
-    const orderAndProducts = await getOrderById(String(item.id));
-    setItems(orderAndProducts);
+    try {
+      const orderAndProducts = await getOrderById(String(item.id));
+      setItems(orderAndProducts);
+      setIsModalActive((prev) => !prev);
+    } catch (error) {
+      setIsModalActive((prev) => !prev);
+    }
   }
 
   return (

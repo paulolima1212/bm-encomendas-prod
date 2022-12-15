@@ -67,3 +67,15 @@ export const TableContainer = styled.div`
     }
   }
 `;
+
+export const WaperFields = styled.div`
+  display: flex;
+
+  input {
+    display: none;
+  }
+
+  input.active {
+    display: initial;
+  }
+`;

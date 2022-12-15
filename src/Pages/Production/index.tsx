@@ -9,6 +9,7 @@ import {
 
 export interface ListProducts {
   description: string;
+  weight: string;
   quantity: string;
   'left(o.dateDelivery, 10)': string;
 }
@@ -36,6 +37,7 @@ export function Production() {
             <thead>
               <tr>
                 <th>Descição</th>
+                <th>Peso</th>
                 <th>Quantidade</th>
                 <th>Data Entrega</th>
               </tr>
@@ -45,6 +47,7 @@ export function Production() {
                 return (
                   <tr key={product['left(o.dateDelivery, 10)']}>
                     <td>{product.description}</td>
+                    <td>{product.weight}</td>
                     <td>{product.quantity}</td>
                     <td>{product['left(o.dateDelivery, 10)']}</td>
                   </tr>

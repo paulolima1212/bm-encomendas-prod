@@ -146,7 +146,7 @@ export function EditOrder() {
 
     updateOrderById(String(dataClient.id), activeOrder);
 
-    return navigate('/resumoencomendas');
+    return navigate('/');
   }
 
   function handleChangeQuantity() {

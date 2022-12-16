@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as Accordion from '@radix-ui/react-accordion';
 
 export const ProductionContainer = styled.div`
   display: flex;
@@ -79,3 +80,5 @@ export const WaperFields = styled.div`
     display: initial;
   }
 `;
+
+export const TrContainer = styled(Accordion.Root)``;

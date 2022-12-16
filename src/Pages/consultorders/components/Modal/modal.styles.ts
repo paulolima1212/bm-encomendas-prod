@@ -17,7 +17,7 @@ export const ModalContainer = styled.div`
 export const MainModalContainer = styled.div`
   position: relative;
   width: 76rem;
-  height: 45rem;
+  min-height: 45rem;
   background: ${({ theme }) => theme['gray-300']};
   border-top-right-radius: 40px;
   border-bottom-left-radius: 40px;
@@ -25,6 +25,7 @@ export const MainModalContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 3rem;
+  padding-bottom: 8rem;
 
   h2 {
     padding: 2rem;

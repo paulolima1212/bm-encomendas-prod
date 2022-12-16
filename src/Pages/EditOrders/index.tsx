@@ -34,6 +34,10 @@ import {
 import { redirect, useNavigate, useParams } from 'react-router-dom';
 import { getOrderById } from '../../services/Http/getOrderById';
 import { updateOrderById } from '../../services/Http/updateOrder';
+import { priceFormatter } from '../../utils/formatter';
+import { getAllProducts } from '../../services/Http/getAllProducts';
+import { getAllProductsVariant } from '../../services/Http/getProductsVariant';
+import { ListProductsProps, ProductsVariantProps } from '../Home';
 
 interface NewProdcutProps {
   id: string;
@@ -79,6 +83,10 @@ export function EditOrder() {
   const [idActiveOrder, setIdActiveOrder] = useState(0);
   const [newOrder, setNewOrder] = useState<NewOrderProps | null>(null);
   const [dataClient, setDataClient] = useState({} as DataClientProps);
+  const [listProducts, setListProducts] = useState<ListProductsProps[]>([]);
+  const [listVariantProducts, setListVariantProducts] = useState<
+    ProductsVariantProps[]
+  >([]);
 
   const descPrincipal = useRef<HTMLInputElement>(null);
   const descVariant = useRef<HTMLInputElement>(null);
@@ -122,7 +130,7 @@ export function EditOrder() {
     const orderToEdit = await getOrderById(String(idOrder.id));
     setNewOrder(orderToEdit);
     //@ts-ignore
-    setOrder(orderToEdit.orders_products);
+    setOrder(orderToEdit.products);
     const newClient: DataClientProps = {
       id: orderToEdit.id,
       name: orderToEdit.client,
@@ -210,6 +218,18 @@ export function EditOrder() {
     setOrder(newList);
   }
 
+  async function handleGetListProducts() {
+    const newListProducts = await getAllProducts();
+
+    setListProducts(newListProducts);
+  }
+
+  async function handleGetProductsVariant(variant: string) {
+    const productsVariants = await getAllProductsVariant(variant);
+
+    setListVariantProducts(productsVariants);
+  }
+
   useEffect(() => {
     handleSetActiveOrder();
   }, []);
@@ -281,30 +301,26 @@ export function EditOrder() {
         </FieldsContainer>
       </form>
       <WarperTableContainer>
-        <datalist id='products'>
-          <option value='Chocolate' />
-          <option value='Tradicional' />
-          <option value='Chocolate branco' />
-        </datalist>
+        <datalist id='products'></datalist>
         <datalist id='peso'>
-          <option value='1.5kg' />
-          <option value='1kg' />
-          <option value='500g' />
+          {listVariantProducts.map((product) => {
+            return <option value={product.weight} />;
+          })}
         </datalist>
         <datalist id='description'>
-          <option value='Bolo rei' />
-          <option value='Pão de ló' />
-          <option value='Rabanada' />
+          {listProducts.map((product) => {
+            return <option value={product.type} />;
+          })}
         </datalist>
         <datalist id='variant'>
-          <option value='Chocolate' />
-          <option value='tradicional' />
-          <option value='nutella' />
+          {listVariantProducts.map((product) => {
+            return <option value={product.variant} />;
+          })}
         </datalist>
         <datalist id='price'>
-          <option value='19.99€' />
-          <option value='18.99€' />
-          <option value='17.99€' />
+          {listVariantProducts.map((product) => {
+            return <option value={product.price.split(' ')[0]} />;
+          })}
         </datalist>
 
         <FieldsItemContainer>
@@ -336,7 +352,8 @@ export function EditOrder() {
                   onChange={handleChangeQuantity}
                   value={quantity}
                   id='quantity'
-                  min={0}
+                  type={'number'}
+                  min={0.1}
                 />
               </span>
               <button onClick={handleIncreaseQuantity}>
@@ -368,7 +385,7 @@ export function EditOrder() {
                   <tr key={item.id}>
                     <td>{item.description}</td>
                     <td>{item.weight}</td>
-                    <td>{item.price}</td>
+                    <td>{priceFormatter.format(Number(item.price))}</td>
                     <td>{item.quantity}</td>
                     <td>
                       <ButtonContainer>

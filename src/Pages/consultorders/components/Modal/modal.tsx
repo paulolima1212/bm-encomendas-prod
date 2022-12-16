@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useOrdersContext } from '../../../../hooks/useOrdersContext';
 import { getOrderById } from '../../../../services/Http/getOrderById';
+import { dateFormatter, priceFormatter } from '../../../../utils/formatter';
 import { NewOrderProps } from '../../../EditOrders';
 import {
   ButtonContainer,
@@ -40,7 +41,7 @@ export function ModalListOrders() {
             <span>
               <strong>Data Entrega</strong>
             </span>
-            <span>{items.dateDelivery}</span>
+            <span>{dateFormatter.format(new Date(items.dateDelivery))}</span>
           </li>
         </UlContainer>
 
@@ -60,7 +61,7 @@ export function ModalListOrders() {
                   <tr>
                     <td>{product.description}</td>
                     <td>{product.weight}</td>
-                    <td>{product.price}</td>
+                    <td>{priceFormatter.format(Number(product.price))}</td>
                     <td>{product.quantity}</td>
                   </tr>
                 );

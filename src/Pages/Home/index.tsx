@@ -213,7 +213,9 @@ export function NewOrder() {
   async function handleGetProductsVariant(variant: string) {
     const productsVariants = await getAllProductsVariant(variant);
 
-    setListVariantProducts(productsVariants);
+    if (variant !== '') {
+      setListVariantProducts(productsVariants);
+    }
   }
 
   useEffect(() => {
@@ -284,25 +286,34 @@ export function NewOrder() {
       </form>
       <WarperTableContainer>
         <datalist id='products'></datalist>
-        <datalist id='peso'>
-          {listVariantProducts.map((product) => {
-            return <option value={product.weight} />;
-          })}
-        </datalist>
         <datalist id='description'>
-          {listProducts.map((product) => {
-            return <option value={product.type} />;
-          })}
+          {listProducts &&
+            listProducts.map((product) => {
+              return <option key={Math.random()} value={product.type} />;
+            })}
+          <datalist id='peso'>
+            {listVariantProducts &&
+              listVariantProducts?.map((product) => {
+                return <option key={Math.random()} value={product.weight} />;
+              })}
+          </datalist>
         </datalist>
         <datalist id='variant'>
-          {listVariantProducts.map((product) => {
-            return <option value={product.variant} />;
-          })}
+          {listVariantProducts &&
+            listVariantProducts?.map((product) => {
+              return <option key={Math.random()} value={product.variant} />;
+            })}
         </datalist>
         <datalist id='price'>
-          {listVariantProducts.map((product) => {
-            return <option value={product.price.split(' ')[0]} />;
-          })}
+          {listVariantProducts &&
+            listVariantProducts?.map((product) => {
+              return (
+                <option
+                  key={Math.random()}
+                  value={product.price.split(' ')[0]}
+                />
+              );
+            })}
         </datalist>
 
         <FieldsItemContainer>

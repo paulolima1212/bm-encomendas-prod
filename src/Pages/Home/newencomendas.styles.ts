@@ -43,12 +43,14 @@ export const WarperTableContainer = styled.div`
   padding: 0rem 3rem;
   background: ${({ theme }) => theme['gray-600']};
   border-radius: 8px;
+  margin-bottom: 5rem;
 
   table {
     width: 100%;
     border-collapse: collapse;
     min-width: 600px;
     color: ${({ theme }) => theme.black};
+    margin-bottom: 20rem;
 
     .peso {
       width: 8rem;
@@ -130,6 +132,8 @@ export const TableContainer = styled.div`
   flex-direction: column;
   overflow: scroll;
   border-radius: 5px;
+  margin-bottom: 5rem;
+
   &::-webkit-scrollbar {
     display: none;
   }

@@ -64,6 +64,7 @@ export interface NewOrderProps {
   dateDelivery: string;
   products: NewProdcutProps[];
   statusOrder: 'pendente' | 'cancelada' | 'entregue';
+  totalOrder?: number;
 }
 
 export function NewOrder() {
@@ -108,6 +109,12 @@ export function NewOrder() {
   }
 
   async function handleCreateNewOrder(data: NewOrderInputs) {
+    const totalOrderCalc = order.reduce((acc, product) => {
+      acc = Number(product.price.split('€')[0]) + acc;
+
+      return acc;
+    }, 0);
+
     const maxOrderId = await getMaxOrderId();
     const activeOrder: NewOrderProps = {
       id: maxOrderId,
@@ -116,6 +123,7 @@ export function NewOrder() {
       dateDelivery: data.dateTime,
       products: order,
       statusOrder: data.status,
+      totalOrder: totalOrderCalc,
     };
 
     createNewOrder(activeOrder);
@@ -140,7 +148,9 @@ export function NewOrder() {
     const descriptionProduct =
       descPrincipal.current!.value + ' - ' + descVariant.current!.value;
     const weightProduct = peso.current!.value;
-    const priceProduct = price.current!.value;
+    const priceProduct = String(
+      Number(price.current!.value.replace(',', '.').split('€')) * quantity
+    );
 
     const idOrder: number = await getMaxOrderId();
 
@@ -331,6 +341,7 @@ export function NewOrder() {
                   onChange={handleChangeQuantity}
                   value={quantity}
                   id='quantity'
+                  type={'number'}
                   min={0}
                 />
               </span>

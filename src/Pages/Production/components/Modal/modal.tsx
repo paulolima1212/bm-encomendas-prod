@@ -7,6 +7,7 @@ import {
   ModalContainer,
   TableContainer,
 } from './modal.styles';
+import { dateFormatter } from '../../../../utils/formatter';
 
 export function ModalOrdersByProducts({
   data,
@@ -40,7 +41,7 @@ export function ModalOrdersByProducts({
                 return (
                   <tr key={item.id}>
                     <td>{item.client}</td>
-                    <td>{item.dateDelivery}</td>
+                    <td>{dateFormatter.format(new Date(item.dateDelivery))}</td>
                     <td>{item.id}</td>
                     <td>{item.quantity}</td>
                     <td>{item.weight}</td>

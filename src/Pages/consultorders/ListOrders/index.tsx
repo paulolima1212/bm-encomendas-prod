@@ -15,11 +15,14 @@ import { NewOrderProps } from '../../Home';
 import { ModalListOrders } from '../components/Modal/modal';
 import {
   ButtonContainer,
+  ResumeOrderContainer,
   StatusContainer,
+  StatusOrderContainer,
   WaperContainer,
   WaperFields,
   WarperTableContainer,
 } from './consultorders.styles';
+import { dateFormatter, priceFormatter } from '../../../utils/formatter';
 
 export function ListOrders() {
   const { isModalActive, handleSetStatusModal } = useOrdersContext();
@@ -69,7 +72,7 @@ export function ListOrders() {
           .toLowerCase()
           .includes(client.current!.value.toLowerCase()) &&
         item.contact.toString().includes(String(contact.current!.value)) &&
-        item.dateDelivery.includes(String(dateDelivery.current!.value)) &&
+        item.dateDelivery.includes(dateDelivery.current!.value) &&
         item.statusOrder.includes(statusOrder.current!.value)
       ) {
         return (
@@ -77,8 +80,8 @@ export function ListOrders() {
             <td>Nº {item.id}</td>
             <td>{item.client}</td>
             <td>{item.contact}</td>
-            <td>{item.dateDelivery}</td>
-            <td>100</td>
+            <td>{dateFormatter.format(new Date(item.dateDelivery))}</td>
+            <td>{priceFormatter.format(Number(item.totalOrder))}</td>
             <td>
               <StatusContainer statusColor={item.statusOrder}>
                 {item.statusOrder}
@@ -108,87 +111,139 @@ export function ListOrders() {
     });
   }
 
+  const totalOrders = orders.reduce(
+    (acc, order) => {
+      acc.total += Number(order.totalOrder);
+
+      if (order.statusOrder === 'cancelada') {
+        acc.cancelada += 1;
+      }
+
+      if (order.statusOrder === 'entregue') {
+        acc.entregue += 1;
+      }
+
+      if (order.statusOrder === 'pendente') {
+        acc.pendente += 1;
+      }
+      return acc;
+    },
+    {
+      total: 0,
+      entregue: 0,
+      pendente: 0,
+      cancelada: 0,
+    }
+  );
+
   return (
     <WaperContainer>
       {isModalActive && <ModalListOrders />}
       <Header title='Consulta Encomendas' />
       <WarperTableContainer>
-        <table>
-          <thead>
-            <tr>
-              <th>
-                <WaperFields>
-                  <span onClick={handleActiveFilter}>Encomenda</span>
-                  <input
-                    ref={numOrder}
-                    type='text'
-                    className='filterField'
-                    onChange={handleSetFilter}
-                  />
-                </WaperFields>
-              </th>
-              <th>
-                <WaperFields>
-                  <span onClick={handleActiveFilter}>Cliente</span>
-                  <input
-                    ref={client}
-                    type='text'
-                    className='filterField'
-                    onChange={handleSetFilter}
-                  />
-                </WaperFields>
-              </th>
-              <th>
-                <WaperFields>
-                  <span onClick={handleActiveFilter}>Tlm/Tlf</span>
-                  <input
-                    ref={contact}
-                    type='text'
-                    className='filterField'
-                    onChange={handleSetFilter}
-                  />
-                </WaperFields>
-              </th>
-              <th>
-                <WaperFields>
-                  <span onClick={handleActiveFilter}>Recolha</span>
-                  <input
-                    ref={dateDelivery}
-                    type='text'
-                    className='filterField'
-                    onChange={handleSetFilter}
-                  />
-                </WaperFields>
-              </th>
-              <th>
-                <WaperFields>
-                  <span onClick={handleActiveFilter}>Total</span>
-                  <input
-                    ref={dateDelivery}
-                    type='text'
-                    className='filterField'
-                    onChange={handleSetFilter}
-                  />
-                </WaperFields>
-              </th>
-              <th>
-                <WaperFields>
-                  <span onClick={handleActiveFilter}>Status</span>
-                  <input
-                    ref={statusOrder}
-                    type='text'
-                    className='filterField'
-                    onChange={handleSetFilter}
-                  />
-                </WaperFields>
-              </th>
-              <th>
-                <span>Tarefas</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>{renderDataTable()}</tbody>
-        </table>
+        <ResumeOrderContainer>
+          <StatusOrderContainer>
+            <div>
+              <StatusContainer statusColor='entregue'>
+                Entregue -{' '}
+              </StatusContainer>
+              <span>{totalOrders.entregue}</span>
+            </div>
+            <div>
+              <StatusContainer statusColor='pendente'>
+                Pendente -{' '}
+              </StatusContainer>
+              <span>{totalOrders.pendente}</span>
+            </div>
+            <div>
+              <StatusContainer statusColor='cancelada'>
+                Cancelada -{' '}
+              </StatusContainer>
+              <span>{totalOrders.cancelada}</span>
+            </div>
+          </StatusOrderContainer>
+          <div>
+            <span>Total:</span>
+            <span>{priceFormatter.format(totalOrders.total)}</span>
+          </div>
+        </ResumeOrderContainer>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <WaperFields>
+                    <span onClick={handleActiveFilter}>Encomenda</span>
+                    <input
+                      ref={numOrder}
+                      type='text'
+                      className='filterField'
+                      onChange={handleSetFilter}
+                    />
+                  </WaperFields>
+                </th>
+                <th>
+                  <WaperFields>
+                    <span onClick={handleActiveFilter}>Cliente</span>
+                    <input
+                      ref={client}
+                      type='text'
+                      className='filterField'
+                      onChange={handleSetFilter}
+                    />
+                  </WaperFields>
+                </th>
+                <th>
+                  <WaperFields>
+                    <span onClick={handleActiveFilter}>Tlm/Tlf</span>
+                    <input
+                      ref={contact}
+                      type='text'
+                      className='filterField'
+                      onChange={handleSetFilter}
+                    />
+                  </WaperFields>
+                </th>
+                <th id='recolha'>
+                  <WaperFields>
+                    <span onClick={handleActiveFilter}>Recolha</span>
+                    <input
+                      ref={dateDelivery}
+                      type='text'
+                      className='filterField'
+                      onChange={handleSetFilter}
+                    />
+                  </WaperFields>
+                </th>
+                <th>
+                  <WaperFields>
+                    <span onClick={handleActiveFilter}>Total</span>
+                    <input
+                      type='text'
+                      className='filterField'
+                      onChange={handleSetFilter}
+                    />
+                  </WaperFields>
+                </th>
+                <th>
+                  <WaperFields>
+                    <span onClick={handleActiveFilter}>Status</span>
+                    <input
+                      ref={statusOrder}
+                      type='text'
+                      className='filterField'
+                      onChange={handleSetFilter}
+                    />
+                  </WaperFields>
+                </th>
+                <th>
+                  <span>Tarefas</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>{renderDataTable()}</tbody>
+          </table>
+        </div>
       </WarperTableContainer>
     </WaperContainer>
   );

@@ -6,6 +6,7 @@ export const WaperContainer = styled.div`
   width: 100%;
   height: 100%;
   padding: 2rem;
+  margin-bottom: 5rem;
 
   h1 {
     color: ${({ theme }) => theme.white};
@@ -16,9 +17,13 @@ export const WarperTableContainer = styled.div`
   height: 100%;
   width: 100%;
   color: ${({ theme }) => theme.white};
-  padding: 2rem 1rem;
-  background: ${({ theme }) => theme['gray-400']};
+  padding: 2rem 2rem;
+  background: ${({ theme }) => theme['gray-800']};
   border-radius: 8px;
+
+  #recolha {
+    width: 20%;
+  }
 
   table {
     width: 100%;
@@ -105,6 +110,30 @@ export const WarperTableContainer = styled.div`
         font-weight: 800;
       }
     }
+  }
+`;
+
+export const StatusOrderContainer = styled.div`
+  display: flex;
+  gap: 5rem;
+
+  & div {
+    display: flex;
+  }
+`;
+
+export const ResumeOrderContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 2rem 4rem;
+  background: ${({ theme }) => theme['gray-500']};
+  margin: 1rem 0;
+  border-radius: 8px;
+  justify-content: space-between;
+
+  & > div {
+    display: flex;
+    gap: 1rem;
   }
 `;
 

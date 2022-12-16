@@ -39,6 +39,10 @@ export const MainModalContainer = styled.div`
       font-weight: bold;
       font-family: 'Roboto', sans-serif;
     }
+
+    svg {
+      cursor: pointer;
+    }
   }
 `;
 

@@ -80,5 +80,3 @@ export const WaperFields = styled.div`
     display: initial;
   }
 `;
-
-export const TrContainer = styled(Accordion.Root)``;

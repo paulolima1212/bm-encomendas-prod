@@ -5,7 +5,9 @@ import { getOrderById } from '../services/Http/getOrderById';
 
 interface OrderContextProps {
   handleSetStatusModal: (item?: any) => void;
+  handleSetStatusModalOrder: () => void;
   isModalActive: boolean;
+  isModalOrdersActive: boolean;
   items: NewOrderProps;
 }
 
@@ -24,6 +26,7 @@ export const ordersContext = createContext({} as OrderContextProps);
 
 export function OrderContextProvider({ children }: { children: ReactNode }) {
   const [isModalActive, setIsModalActive] = useState(false);
+  const [isModalOrdersActive, setIsModalOrdersActive] = useState(false);
   const [items, setItems] = useState({} as NewOrderProps);
 
   async function handleSetStatusModal(item: DataEncomenda) {
@@ -36,9 +39,19 @@ export function OrderContextProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  async function handleSetStatusModalOrder() {
+    setIsModalOrdersActive((prev) => !prev);
+  }
+
   return (
     <ordersContext.Provider
-      value={{ handleSetStatusModal, isModalActive, items }}
+      value={{
+        handleSetStatusModal,
+        handleSetStatusModalOrder,
+        isModalActive,
+        items,
+        isModalOrdersActive,
+      }}
     >
       {children}
     </ordersContext.Provider>

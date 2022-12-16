@@ -1,6 +1,12 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Header } from '../../components/Header';
+import { useOrdersContext } from '../../hooks/useOrdersContext';
 import { getListProducts } from '../../services/Http/getListProducts';
+import {
+  DataOrderByProductProps,
+  getOrderByProduct,
+} from '../../services/Http/getOrdersByProduct';
+import { ModalOrdersByProducts } from './components/Modal/modal';
 import {
   MainContainer,
   ProductionContainer,
@@ -16,7 +22,14 @@ export interface ListProducts {
   'left(o.dateDelivery, 10)': string;
 }
 
+interface ModalProps {
+  data: DataOrderByProductProps[];
+  product: string;
+}
+
 export function Production() {
+  const { handleSetStatusModalOrder, isModalOrdersActive } = useOrdersContext();
+
   const description = useRef<HTMLInputElement>(null);
   const weight = useRef<HTMLInputElement>(null);
   const quantity = useRef<HTMLInputElement>(null);
@@ -24,6 +37,7 @@ export function Production() {
 
   const [listProducts, setListProducts] = useState<ListProducts[]>([]);
   const [filter, setFilter] = useState('');
+  const [dataOrder, setDataOrder] = useState<ModalProps>({} as ModalProps);
 
   async function handlerGetListProducts() {
     const newListProduct: ListProducts[] = await getListProducts();
@@ -40,6 +54,20 @@ export function Production() {
 
     field.classList.toggle('active');
     field.focus();
+  }
+
+  async function handleListItem(e: React.MouseEvent<HTMLTableCellElement>) {
+    const product = e.currentTarget.innerText.toLowerCase().replace(' ', '%20');
+    const productText = e.currentTarget.innerHTML;
+
+    const data = await getOrderByProduct(product);
+
+    setDataOrder({
+      data,
+      product: productText,
+    });
+
+    handleSetStatusModalOrder();
   }
 
   function renderTableInfo() {
@@ -60,7 +88,7 @@ export function Production() {
       ) {
         return (
           <tr key={product.id}>
-            <td>{product.description}</td>
+            <td onClick={handleListItem}>{product.description}</td>
             <td>{product.weight}</td>
             <td>{product['sum(op.quantity)']}</td>
             <td>{product['left(o.dateDelivery, 10)']}</td>
@@ -76,6 +104,12 @@ export function Production() {
 
   return (
     <ProductionContainer>
+      {isModalOrdersActive && (
+        <ModalOrdersByProducts
+          data={dataOrder.data}
+          product={dataOrder.product}
+        />
+      )}
       <Header title='Lista Produtos' />
       <MainContainer>
         <h2>Production</h2>

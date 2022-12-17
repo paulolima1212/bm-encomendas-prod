@@ -160,7 +160,7 @@ export const InputContainer = styled(BaseInputField)<InputFieldsContainerProps>`
 
 export const InputQuantityContainer = styled.input`
   height: 3.2rem;
-  width: 2rem;
+  width: 6rem;
   background: ${({ theme }) => theme['gray-300']};
   text-align: center;
 `;
@@ -246,7 +246,7 @@ export const FieldsItemContainer = styled.div`
     }
 
     input {
-      width: 3rem;
+      width: 6rem;
       border: none;
       border-radius: 5px;
       border-bottom: solid 2px transparent;

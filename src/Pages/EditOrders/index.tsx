@@ -54,6 +54,7 @@ export interface NewOrderProps {
   dateDelivery: string;
   products: NewProdcutProps[];
   statusOrder: string;
+  totalOrder?: number;
 }
 
 interface DataClientProps {
@@ -143,6 +144,10 @@ export function EditOrder() {
   }
 
   async function handleUpdateOrder(e: any) {
+    const totalOrder = order.reduce((acc, item) => {
+      acc += Number(item.price);
+      return acc;
+    }, 0);
     const activeOrder: NewOrderProps = {
       id: dataClient.id,
       client: dataClient.name,
@@ -150,6 +155,7 @@ export function EditOrder() {
       dateDelivery: dataClient.date,
       products: order,
       statusOrder: dataClient.status,
+      totalOrder,
     };
 
     updateOrderById(String(dataClient.id), activeOrder);
@@ -353,7 +359,7 @@ export function EditOrder() {
                   value={quantity}
                   id='quantity'
                   type={'number'}
-                  min={0.1}
+                  min={0}
                 />
               </span>
               <button onClick={handleIncreaseQuantity}>

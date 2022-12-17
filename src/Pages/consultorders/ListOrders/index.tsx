@@ -50,6 +50,7 @@ export function ListOrders() {
   function handleActiveFilter(
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>
   ) {
+    console.log(e);
     const activeInput = e.currentTarget.nextSibling as HTMLInputElement;
 
     activeInput.classList.toggle('active');

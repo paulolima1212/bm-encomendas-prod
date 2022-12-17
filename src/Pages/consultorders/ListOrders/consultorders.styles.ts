@@ -119,6 +119,11 @@ export const StatusOrderContainer = styled.div`
 
   & div {
     display: flex;
+
+    span {
+      display: flex;
+      align-items: center;
+    }
   }
 `;
 

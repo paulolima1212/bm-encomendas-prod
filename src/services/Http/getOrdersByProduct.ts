@@ -8,9 +8,15 @@ export interface DataOrderByProductProps {
   weight: string;
 }
 
-export async function getOrderByProduct(product: string) {
+export async function getOrderByProduct(
+  product: string,
+  productWeight: string,
+  productDate: string
+) {
   const data: DataOrderByProductProps[] = await (
-    await api.get(`orders-products/list/orderbyproduct/${product}`)
+    await api.get(
+      `orders-products/list/orderbyproduct?description=${product}&weight=${productWeight}&dateDelivery=${productDate}`
+    )
   ).data;
 
   return data;

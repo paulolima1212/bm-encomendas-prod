@@ -15,7 +15,7 @@ import {
 } from './production.styles';
 
 export interface ListProducts {
-  id: string;
+  id?: string;
   description: string;
   weight: string;
   'sum(op.quantity)': string;
@@ -57,10 +57,19 @@ export function Production() {
   }
 
   async function handleListItem(e: React.MouseEvent<HTMLTableCellElement>) {
+    const productWeight = e.currentTarget.nextElementSibling!.innerHTML;
+    const productFieldPeso = e.currentTarget.nextElementSibling;
+    const productFieldQuantity = productFieldPeso!.nextSibling;
+    const productDateField = productFieldQuantity!.nextSibling;
     const product = e.currentTarget.innerText.toLowerCase().replace(' ', '%20');
     const productText = e.currentTarget.innerHTML;
+    const productDate = productDateField?.textContent;
 
-    const data = await getOrderByProduct(product);
+    const data = await getOrderByProduct(
+      product,
+      productWeight,
+      String(productDate)
+    );
 
     setDataOrder({
       data,
@@ -88,7 +97,9 @@ export function Production() {
       ) {
         return (
           <tr key={product.id}>
-            <td onClick={handleListItem}>{product.description}</td>
+            <td className='productDescription' onClick={handleListItem}>
+              {product.description}
+            </td>
             <td>{product.weight}</td>
             <td>{product['sum(op.quantity)']}</td>
             <td>{product['left(o.dateDelivery, 10)']}</td>

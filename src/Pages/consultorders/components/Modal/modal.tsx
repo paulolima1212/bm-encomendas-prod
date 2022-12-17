@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
 import { useOrdersContext } from '../../../../hooks/useOrdersContext';
-import { getOrderById } from '../../../../services/Http/getOrderById';
 import { dateFormatter, priceFormatter } from '../../../../utils/formatter';
-import { NewOrderProps } from '../../../EditOrders';
 import {
   ButtonContainer,
   MainModalContainer,

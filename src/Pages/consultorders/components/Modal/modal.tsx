@@ -1,3 +1,4 @@
+import { X } from 'phosphor-react';
 import { useOrdersContext } from '../../../../hooks/useOrdersContext';
 import { dateFormatter, priceFormatter } from '../../../../utils/formatter';
 import {
@@ -9,12 +10,17 @@ import {
 } from './modal.styles';
 
 export function ModalListOrders() {
-  const { handleSetStatusModal, items } = useOrdersContext();
+  const { handleSetStatusModal, handleSendMessage, items } = useOrdersContext();
 
   return (
-    <ModalContainer onClick={() => handleSetStatusModal(items.id)}>
+    <ModalContainer>
       <MainModalContainer>
-        <h2>Enviar pedido</h2>
+        <h2>
+          <strong>Enviar pedido</strong>
+          <span onClick={() => handleSetStatusModal(items.id)}>
+            <X />
+          </span>
+        </h2>
         <UlContainer>
           <li>
             <span>
@@ -66,7 +72,7 @@ export function ModalListOrders() {
             </tbody>
           </table>
         </TableContainer>
-        <ButtonContainer>
+        <ButtonContainer onClick={() => handleSendMessage()}>
           <strong>Enviar</strong>
         </ButtonContainer>
       </MainModalContainer>

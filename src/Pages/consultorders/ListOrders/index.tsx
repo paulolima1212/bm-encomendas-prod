@@ -1,11 +1,5 @@
-import { PencilSimpleLine, Scroll, SignOut, Trash } from 'phosphor-react';
-import React, {
-  ChangeEvent,
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { PencilSimpleLine, Scroll, Trash } from 'phosphor-react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Header } from '../../../components/Header';
 import { useOrdersContext } from '../../../hooks/useOrdersContext';

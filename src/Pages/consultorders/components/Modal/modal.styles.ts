@@ -33,6 +33,13 @@ export const MainModalContainer = styled.div`
     color: ${({ theme }) => theme['gray-900']};
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-top: 0.6rem;
+      margin-left: 3rem;
+    }
   }
 `;
 

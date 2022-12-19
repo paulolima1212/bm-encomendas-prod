@@ -31,7 +31,7 @@ import {
   PencilLine,
   FloppyDisk,
 } from 'phosphor-react';
-import { redirect, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getOrderById } from '../../services/Http/getOrderById';
 import { updateOrderById } from '../../services/Http/updateOrder';
 import { priceFormatter } from '../../utils/formatter';
@@ -170,13 +170,14 @@ export function EditOrder() {
 
   async function handleAddProductInCart() {
     const descriptionProduct =
-      descPrincipal.current!.value + ' - ' + descVariant.current!.value;
+      descPrincipal.current!.value + '-' + descVariant.current!.value;
     const weightProduct = peso.current!.value;
     const priceProduct = price.current!.value;
-
     const idOrder = dataClient.id;
 
     setIdActiveOrder(idOrder);
+
+    console.log(descriptionProduct, descPrincipal.current!.value);
 
     if (
       descriptionProduct !== '' &&

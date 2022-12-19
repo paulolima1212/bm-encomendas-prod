@@ -88,9 +88,7 @@ export function Production() {
         product.weight
           .toLowerCase()
           .includes(weight.current!.value.toLowerCase()) &&
-        product['sum(op.quantity)']
-          .toString()
-          .includes(weight.current!.value) &&
+        product['sum(op.quantity)'].toString().match(quantity.current!.value) &&
         product['left(o.dateDelivery, 10)'].includes(
           dateDelivery.current!.value
         )

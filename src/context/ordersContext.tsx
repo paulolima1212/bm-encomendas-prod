@@ -2,10 +2,12 @@ import { createContext, ReactNode, useState } from 'react';
 import { NewOrderProps } from '../Pages/EditOrders';
 import { NewProdcutProps } from '../Pages/Home';
 import { getOrderById } from '../services/Http/getOrderById';
+import { sendMessage } from '../services/Http/sendMessage';
 
 interface OrderContextProps {
   handleSetStatusModal: (item?: any) => void;
   handleSetStatusModalOrder: () => void;
+  handleSendMessage: () => void;
   isModalActive: boolean;
   isModalOrdersActive: boolean;
   items: NewOrderProps;
@@ -43,11 +45,17 @@ export function OrderContextProvider({ children }: { children: ReactNode }) {
     setIsModalOrdersActive((prev) => !prev);
   }
 
+  async function handleSendMessage() {
+    sendMessage(items);
+    setIsModalActive((prev) => !prev);
+  }
+
   return (
     <ordersContext.Provider
       value={{
         handleSetStatusModal,
         handleSetStatusModalOrder,
+        handleSendMessage,
         isModalActive,
         items,
         isModalOrdersActive,

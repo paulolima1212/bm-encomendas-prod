@@ -63,7 +63,6 @@ export function ListOrders() {
 
   function renderDataTable() {
     return orders.map((item) => {
-      console.log(new Date(item.dateDelivery), item.id);
       if (
         item.id.toString().includes(String(numOrder.current!.value)) &&
         item.client

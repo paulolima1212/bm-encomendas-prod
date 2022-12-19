@@ -177,8 +177,6 @@ export function EditOrder() {
 
     setIdActiveOrder(idOrder);
 
-    console.log(descriptionProduct, descPrincipal.current!.value);
-
     if (
       descriptionProduct !== '' &&
       weightProduct !== '' &&

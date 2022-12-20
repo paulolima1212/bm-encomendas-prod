@@ -160,8 +160,8 @@ export function ListOrders() {
             </div>
           </StatusOrderContainer>
           <div>
-            <span>Total:</span>
-            <span>{priceFormatter.format(totalOrders.total)}</span>
+            {/* <span>Total:</span>
+            <span>{priceFormatter.format(totalOrders.total)}</span> */}
           </div>
         </ResumeOrderContainer>
         <div>

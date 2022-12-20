@@ -6,8 +6,12 @@ export const WaperContainer = styled.div`
   background: ${({ theme }) => theme['gray-400']};
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: scroll;
   padding: 2rem;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const FieldsContainer = styled.div`
@@ -133,6 +137,7 @@ export const TableContainer = styled.div`
   overflow: scroll;
   border-radius: 5px;
   margin-bottom: 5rem;
+  padding: 2rem 0;
 
   &::-webkit-scrollbar {
     display: none;

@@ -177,8 +177,6 @@ export function EditOrder() {
     );
     const idOrder = dataClient.id;
 
-    console.log(price.current!.value);
-
     setIdActiveOrder(idOrder);
 
     if (
@@ -218,7 +216,7 @@ export function EditOrder() {
         descPrincipal.current!.value = item.description.split('-')[0];
         descVariant.current!.value = item.description.split('-')[1];
         peso.current!.value = item.weight;
-        price.current!.value = item.price;
+        price.current!.value = String(Number(item.price) / item.quantity);
         setQuantity(item.quantity);
       }
       return null;

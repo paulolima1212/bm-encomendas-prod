@@ -39,6 +39,7 @@ export const MainModalContainer = styled.div`
     span {
       margin-top: 0.6rem;
       margin-left: 3rem;
+      cursor: pointer;
     }
   }
 `;
@@ -86,6 +87,7 @@ export const ButtonContainer = styled.button`
   left: 50%;
   bottom: 5%;
   border: none;
+  cursor: pointer;
 
   border-radius: 8px;
   background: ${({ theme }) => theme['green-500']};

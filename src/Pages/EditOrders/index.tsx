@@ -172,8 +172,12 @@ export function EditOrder() {
     const descriptionProduct =
       descPrincipal.current!.value + '-' + descVariant.current!.value;
     const weightProduct = peso.current!.value;
-    const priceProduct = price.current!.value;
+    const priceProduct = String(
+      Number(price.current!.value.replace(',', '.')) * quantity
+    );
     const idOrder = dataClient.id;
+
+    console.log(price.current!.value);
 
     setIdActiveOrder(idOrder);
 
@@ -232,11 +236,14 @@ export function EditOrder() {
   async function handleGetProductsVariant(variant: string) {
     const productsVariants = await getAllProductsVariant(variant);
 
-    setListVariantProducts(productsVariants);
+    if (variant !== '') {
+      setListVariantProducts(productsVariants);
+    }
   }
 
   useEffect(() => {
     handleSetActiveOrder();
+    handleGetListProducts();
   }, []);
 
   return (
@@ -338,6 +345,9 @@ export function EditOrder() {
               ref={descPrincipal}
               type='text'
               list='description'
+              onChange={() =>
+                handleGetProductsVariant(descPrincipal.current!.value)
+              }
             />
             <InputContainerBigger
               ref={descVariant}

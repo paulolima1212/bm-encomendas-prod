@@ -170,7 +170,9 @@ export function EditOrder() {
 
   async function handleAddProductInCart() {
     const descriptionProduct =
-      descPrincipal.current!.value + '-' + descVariant.current!.value;
+      descPrincipal.current!.value.trimEnd() +
+      ' - ' +
+      descVariant.current!.value.trimStart();
     const weightProduct = peso.current!.value;
     const priceProduct = String(
       Number(price.current!.value.replace(',', '.')) * quantity

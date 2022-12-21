@@ -11,7 +11,7 @@ export const ModalContainer = styled.div`
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 export const MainModalContainer = styled.div`
@@ -26,6 +26,9 @@ export const MainModalContainer = styled.div`
   align-items: center;
   padding: 3rem;
   padding-bottom: 8rem;
+  overflow: scroll;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 
   h2 {
     padding: 2rem;

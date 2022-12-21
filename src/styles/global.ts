@@ -8,6 +8,10 @@ export const GlobalStyle = createGlobalStyle`
  box-sizing: border-box;
  text-decoration: none;
  list-style: none;
+
+ &::-webkit-scrollbar {
+    display: none;
+  }
  
 }
 

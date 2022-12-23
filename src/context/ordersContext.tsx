@@ -8,9 +8,11 @@ interface OrderContextProps {
   handleSetStatusModal: (item?: any) => void;
   handleSetStatusModalOrder: () => void;
   handleSendMessage: () => void;
+  handlerSetObsProduct: (value: string) => void;
   isModalActive: boolean;
   isModalOrdersActive: boolean;
   items: NewOrderProps;
+  obsProduct: string;
 }
 
 interface DataEncomenda {
@@ -30,6 +32,7 @@ export function OrderContextProvider({ children }: { children: ReactNode }) {
   const [isModalActive, setIsModalActive] = useState(false);
   const [isModalOrdersActive, setIsModalOrdersActive] = useState(false);
   const [items, setItems] = useState({} as NewOrderProps);
+  const [obsProduct, setObsProduct] = useState('');
 
   async function handleSetStatusModal(item: DataEncomenda) {
     try {
@@ -50,15 +53,21 @@ export function OrderContextProvider({ children }: { children: ReactNode }) {
     setIsModalActive((prev) => !prev);
   }
 
+  function handlerSetObsProduct(obs: string) {
+    setObsProduct(obs);
+  }
+
   return (
     <ordersContext.Provider
       value={{
         handleSetStatusModal,
         handleSetStatusModalOrder,
         handleSendMessage,
+        handlerSetObsProduct,
         isModalActive,
         items,
         isModalOrdersActive,
+        obsProduct,
       }}
     >
       {children}

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Header } from '../../components/Header';
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as Dialog from '@radix-ui/react-dialog';
 
 import cuid from 'cuid';
 import * as z from 'zod';
@@ -10,6 +11,7 @@ import {
   ButtonCartEncomenda,
   ButtonContainer,
   ButtonCriarEncomendaContainer,
+  ButtonInfoEncomenda,
   FieldsContainer,
   FieldsItemContainer,
   InputContainer,
@@ -30,11 +32,14 @@ import {
   Trash,
   PencilLine,
   FloppyDisk,
+  Info,
 } from 'phosphor-react';
 import { createNewOrder } from '../../services/Http/createOrder';
 import { getMaxOrderId } from '../../services/Http/getOrderId';
 import { getAllProducts } from '../../services/Http/getAllProducts';
 import { getAllProductsVariant } from '../../services/Http/getProductsVariant';
+import { ObsModal } from './components/ObsModal';
+import { useOrdersContext } from '../../hooks/useOrdersContext';
 
 export interface NewProdcutProps {
   id: string;
@@ -42,6 +47,7 @@ export interface NewProdcutProps {
   weight: string;
   quantity: number;
   price: string;
+  obs?: string;
 }
 
 export interface ListProductsProps {
@@ -68,6 +74,8 @@ export interface NewOrderProps {
 }
 
 export function NewOrder() {
+  const { obsProduct } = useOrdersContext();
+
   const newOrderSchema = z.object({
     name: z.string(),
     phone: z.string(),
@@ -170,9 +178,12 @@ export function NewOrder() {
         price: priceProduct,
         description: descriptionProduct,
         quantity,
+        obs: obsProduct,
       };
 
       setOrder((prev) => [...prev, newItem]);
+
+      console.log(newItem);
 
       descPrincipal.current!.value = '';
       descVariant.current!.value = '';
@@ -223,6 +234,8 @@ export function NewOrder() {
   useEffect(() => {
     handleGetListProducts();
   }, []);
+
+  const [open, setOpen] = useState(false);
 
   return (
     <WaperContainer>
@@ -367,6 +380,12 @@ export function NewOrder() {
               <ButtonCartEncomenda onClick={handleAddProductInCart}>
                 <ShoppingCart size={25} />
               </ButtonCartEncomenda>
+              <Dialog.Root open={open}>
+                <ButtonInfoEncomenda onClick={() => setOpen(true)}>
+                  <Info size={32} />
+                </ButtonInfoEncomenda>
+                <ObsModal closeModal={setOpen} />
+              </Dialog.Root>
             </ButtonContainer>
           </div>
         </FieldsItemContainer>

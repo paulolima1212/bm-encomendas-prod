@@ -45,6 +45,7 @@ interface NewProdcutProps {
   weight: string;
   quantity: number;
   price: string;
+  obs?: string;
 }
 
 export interface NewOrderProps {

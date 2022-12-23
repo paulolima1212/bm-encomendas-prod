@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as Dialog from '@radix-ui/react-dialog';
 
 export const WaperContainer = styled.div`
   height: 100vh;
@@ -202,6 +203,13 @@ export const ButtonCriarEncomendaContainer = styled.button`
 `;
 
 export const ButtonCartEncomenda = styled.button`
+  height: 1rem;
+  width: 1rem;
+  border: none;
+  background: transparent;
+`;
+
+export const ButtonInfoEncomenda = styled(Dialog.Trigger)`
   height: 1rem;
   width: 1rem;
   border: none;

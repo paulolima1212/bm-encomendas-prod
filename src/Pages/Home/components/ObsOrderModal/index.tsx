@@ -14,10 +14,8 @@ interface ObsOrderModalProps {
 export function ObsOrderModal({ closeModal }: ObsOrderModalProps) {
   const { handlerSetObsOrder } = useOrdersContext();
 
-  function handleSetObsOrder(e: FormEvent) {
-    e.preventDefault();
-
-    const obs = e.currentTarget.firstChild as HTMLTextAreaElement;
+  function handleSetObsOrder(e: React.MouseEvent<HTMLButtonElement>) {
+    const obs = e.currentTarget.previousElementSibling as HTMLTextAreaElement;
     handlerSetObsOrder(obs.value);
     closeModal(false);
   }
@@ -27,12 +25,12 @@ export function ObsOrderModal({ closeModal }: ObsOrderModalProps) {
       <ObsModalContent />
       <Content>
         <TitleContent>Observações da Entrega</TitleContent>
-        <form id='form-order-obs' onSubmit={handleSetObsOrder}>
+        <div>
           <textarea name='obsOrder' />
-          <button type='submit' formTarget='form-order-obs'>
+          <button type='button' onClick={handleSetObsOrder}>
             Confirmar
           </button>
-        </form>
+        </div>
       </Content>
     </ObsModalContainer>
   );

@@ -14,10 +14,8 @@ interface ObsModalProps {
 export function ObsModal({ closeModal }: ObsModalProps) {
   const { handlerSetObsProduct } = useOrdersContext();
 
-  function handleSetObsProduct(e: FormEvent) {
-    e.preventDefault();
-
-    const obs = e.currentTarget.firstChild as HTMLTextAreaElement;
+  function handleSetObsProduct(e: React.MouseEvent<HTMLButtonElement>) {
+    const obs = e.currentTarget.previousElementSibling as HTMLTextAreaElement;
     handlerSetObsProduct(obs.value);
     closeModal(false);
   }
@@ -27,10 +25,12 @@ export function ObsModal({ closeModal }: ObsModalProps) {
       <ObsModalContent />
       <Content>
         <TitleContent>Observações do Produto</TitleContent>
-        <form onSubmit={handleSetObsProduct}>
+        <div>
           <textarea name='obsProduct' />
-          <button type='submit'>Confirmar</button>
-        </form>
+          <button type='button' onClick={handleSetObsProduct}>
+            Confirmar
+          </button>
+        </div>
       </Content>
     </ObsModalContainer>
   );

@@ -27,7 +27,7 @@ export const Content = styled(Dialog.Content)`
   padding: 3rem;
   gap: 1.5rem;
 
-  form {
+  > div {
     width: 100%;
     height: 100%;
     display: flex;
@@ -40,7 +40,7 @@ export const Content = styled(Dialog.Content)`
       font-size: 2.5rem;
     }
 
-    button[type='submit'] {
+    button {
       margin: 0 auto;
       padding: 0.8rem 3.5rem;
       border-radius: 6px;

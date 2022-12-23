@@ -139,6 +139,8 @@ export function NewOrder() {
       obs: obsOrder,
     };
 
+    console.log(activeOrder);
+
     createNewOrder(activeOrder);
 
     setNewOrder(activeOrder);

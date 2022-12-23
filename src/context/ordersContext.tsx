@@ -58,6 +58,7 @@ export function OrderContextProvider({ children }: { children: ReactNode }) {
   }
 
   function handlerSetObsProduct(obs: string) {
+    console.log(obs);
     setObsProduct(obs);
   }
 

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as Dialog from '@radix-ui/react-dialog';
 
 export const WaperContainer = styled.div`
   height: 100vh;
@@ -226,6 +227,13 @@ export const ButtonContainer = styled.div`
   }
 `;
 
+export const ButtonInfoEncomenda = styled(Dialog.Trigger)`
+  height: 1rem;
+  width: 1rem;
+  border: none;
+  background: transparent;
+`;
+
 export const FieldsItemContainer = styled.div`
   padding: 2rem 0;
   gap: 0.8rem;
@@ -297,3 +305,5 @@ export const InputContainerSmall = styled(BaseInput)`
 export const InputContainerBigger = styled(BaseInput)`
   width: 35rem;
 `;
+
+export const DialogRoot = styled(Dialog.Root)``;

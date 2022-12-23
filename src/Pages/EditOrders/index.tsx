@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Header } from '../../components/Header';
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as Dialog from '@radix-ui/react-dialog';
 
 import cuid from 'cuid';
 import * as z from 'zod';
@@ -10,6 +11,8 @@ import {
   ButtonCartEncomenda,
   ButtonContainer,
   ButtonCriarEncomendaContainer,
+  ButtonInfoEncomenda,
+  DialogRoot,
   FieldsContainer,
   FieldsItemContainer,
   InputContainer,
@@ -30,6 +33,7 @@ import {
   Trash,
   PencilLine,
   FloppyDisk,
+  Info,
 } from 'phosphor-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getOrderById } from '../../services/Http/getOrderById';
@@ -38,6 +42,9 @@ import { priceFormatter } from '../../utils/formatter';
 import { getAllProducts } from '../../services/Http/getAllProducts';
 import { getAllProductsVariant } from '../../services/Http/getProductsVariant';
 import { ListProductsProps, ProductsVariantProps } from '../Home';
+import { ObsOrderModal } from './components/ObsOrderModal';
+import { ObsModal } from './components/ObsModal';
+import { useOrdersContext } from '../../hooks/useOrdersContext';
 
 interface NewProdcutProps {
   id: string;
@@ -68,6 +75,9 @@ interface DataClientProps {
 }
 
 export function EditOrder() {
+  const { obsProduct, handlerSetObsProduct, obsOrder, handlerSetObsOrder } =
+    useOrdersContext();
+
   const idOrder = useParams();
 
   const navigate = useNavigate();
@@ -158,9 +168,12 @@ export function EditOrder() {
       products: order,
       statusOrder: dataClient.status,
       totalOrder,
+      obs: obsOrder,
     };
 
     updateOrderById(String(dataClient.id), activeOrder);
+
+    handlerSetObsOrder('');
 
     return navigate('/');
   }
@@ -195,9 +208,12 @@ export function EditOrder() {
         price: priceProduct,
         description: descriptionProduct,
         quantity,
+        obs: obsProduct,
       };
 
       setOrder((prev) => [...prev, newItem]);
+
+      handlerSetObsProduct('');
 
       descPrincipal.current!.value = '';
       descVariant.current!.value = '';
@@ -247,6 +263,9 @@ export function EditOrder() {
     handleSetActiveOrder();
     handleGetListProducts();
   }, []);
+
+  const [open, setOpen] = useState(false);
+  const [openOrder, setOpenOrder] = useState(false);
 
   return (
     <WaperContainer>
@@ -311,6 +330,12 @@ export function EditOrder() {
                 value={dataClient.status}
               />
             </label>
+            <DialogRoot open={openOrder}>
+              <ButtonInfoEncomenda onClick={() => setOpenOrder(true)}>
+                <Info size={32} color='#fff' />
+              </ButtonInfoEncomenda>
+              <ObsOrderModal closeModal={setOpenOrder} />
+            </DialogRoot>
           </div>
         </FieldsContainer>
       </form>
@@ -382,6 +407,12 @@ export function EditOrder() {
               <ButtonCartEncomenda onClick={handleAddProductInCart}>
                 <ShoppingCart size={25} />
               </ButtonCartEncomenda>
+              <Dialog.Root open={open}>
+                <ButtonInfoEncomenda onClick={() => setOpen(true)}>
+                  <Info size={32} />
+                </ButtonInfoEncomenda>
+                <ObsModal closeModal={setOpen} />
+              </Dialog.Root>
             </ButtonContainer>
           </div>
         </FieldsItemContainer>

@@ -190,7 +190,6 @@ export function NewOrder() {
       setOrder((prev) => [...prev, newItem]);
 
       handlerSetObsProduct('');
-      console.log(newItem);
 
       descPrincipal.current!.value = '';
       descVariant.current!.value = '';

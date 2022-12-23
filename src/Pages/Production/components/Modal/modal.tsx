@@ -34,6 +34,7 @@ export function ModalOrdersByProducts({
                 <th>Nº En.</th>
                 <th>Quantidade</th>
                 <th>Peso</th>
+                <th>OBS</th>
               </tr>
             </thead>
             <tbody>
@@ -45,6 +46,7 @@ export function ModalOrdersByProducts({
                     <td>{item.id}</td>
                     <td>{item.quantity}</td>
                     <td>{item.weight}</td>
+                    <td>{item.obs}</td>
                   </tr>
                 );
               })}

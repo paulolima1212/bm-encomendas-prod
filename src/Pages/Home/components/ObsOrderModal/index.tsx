@@ -7,18 +7,18 @@ import {
 } from './styles';
 import { useOrdersContext } from '../../../../hooks/useOrdersContext';
 
-interface ObsModalProps {
+interface ObsOrderModalProps {
   closeModal: (value: boolean) => void;
 }
 
-export function ObsModal({ closeModal }: ObsModalProps) {
-  const { handlerSetObsProduct } = useOrdersContext();
+export function ObsOrderModal({ closeModal }: ObsOrderModalProps) {
+  const { handlerSetObsOrder } = useOrdersContext();
 
-  function handleSetObsProduct(e: FormEvent) {
+  function handleSetObsOrder(e: FormEvent) {
     e.preventDefault();
 
     const obs = e.currentTarget.firstChild as HTMLTextAreaElement;
-    handlerSetObsProduct(obs.value);
+    handlerSetObsOrder(obs.value);
     closeModal(false);
   }
 
@@ -26,10 +26,12 @@ export function ObsModal({ closeModal }: ObsModalProps) {
     <ObsModalContainer>
       <ObsModalContent />
       <Content>
-        <TitleContent>Observações do Produto</TitleContent>
-        <form onSubmit={handleSetObsProduct}>
-          <textarea name='obsProduct' />
-          <button type='submit'>Confirmar</button>
+        <TitleContent>Observações da Entrega</TitleContent>
+        <form id='form-order-obs' onSubmit={handleSetObsOrder}>
+          <textarea name='obsOrder' />
+          <button type='submit' formTarget='form-order-obs'>
+            Confirmar
+          </button>
         </form>
       </Content>
     </ObsModalContainer>

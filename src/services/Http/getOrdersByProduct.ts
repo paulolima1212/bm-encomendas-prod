@@ -6,6 +6,7 @@ export interface DataOrderByProductProps {
   dateDelivery: string;
   quantity: string;
   weight: string;
+  obs?: string;
 }
 
 export async function getOrderByProduct(

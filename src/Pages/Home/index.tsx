@@ -12,6 +12,7 @@ import {
   ButtonContainer,
   ButtonCriarEncomendaContainer,
   ButtonInfoEncomenda,
+  DialogRoot,
   FieldsContainer,
   FieldsItemContainer,
   InputContainer,
@@ -40,6 +41,7 @@ import { getAllProducts } from '../../services/Http/getAllProducts';
 import { getAllProductsVariant } from '../../services/Http/getProductsVariant';
 import { ObsModal } from './components/ObsModal';
 import { useOrdersContext } from '../../hooks/useOrdersContext';
+import { ObsOrderModal } from './components/ObsOrderModal';
 
 export interface NewProdcutProps {
   id: string;
@@ -71,13 +73,15 @@ export interface NewOrderProps {
   products: NewProdcutProps[];
   statusOrder: 'pendente' | 'cancelada' | 'entregue';
   totalOrder?: number;
+  obs?: string;
 }
 
 export function NewOrder() {
-  const { obsProduct } = useOrdersContext();
+  const { obsProduct, handlerSetObsProduct, obsOrder, handlerSetObsOrder } =
+    useOrdersContext();
 
   const newOrderSchema = z.object({
-    name: z.string(),
+    name: z.string().min(1, 'fill this field'),
     phone: z.string(),
     dateTime: z.string(),
     status: z.enum(['pendente', 'cancelada', 'entregue']),
@@ -132,9 +136,11 @@ export function NewOrder() {
       products: order,
       statusOrder: data.status,
       totalOrder: totalOrderCalc,
+      obs: obsOrder,
     };
 
     createNewOrder(activeOrder);
+    handlerSetObsOrder('');
 
     setNewOrder(activeOrder);
     setIdActiveOrder(0);
@@ -183,6 +189,7 @@ export function NewOrder() {
 
       setOrder((prev) => [...prev, newItem]);
 
+      handlerSetObsProduct('');
       console.log(newItem);
 
       descPrincipal.current!.value = '';
@@ -236,6 +243,7 @@ export function NewOrder() {
   }, []);
 
   const [open, setOpen] = useState(false);
+  const [openOrder, setOpenOrder] = useState(false);
 
   return (
     <WaperContainer>
@@ -296,6 +304,12 @@ export function NewOrder() {
                 {...register('status')}
               />
             </label>
+            <DialogRoot open={openOrder}>
+              <ButtonInfoEncomenda onClick={() => setOpenOrder(true)}>
+                <Info size={32} color='#fff' />
+              </ButtonInfoEncomenda>
+              <ObsOrderModal closeModal={setOpenOrder} />
+            </DialogRoot>
           </div>
         </FieldsContainer>
       </form>

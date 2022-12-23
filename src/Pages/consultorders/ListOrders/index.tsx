@@ -18,8 +18,6 @@ import {
 } from './consultorders.styles';
 import { dateFormatter, priceFormatter } from '../../../utils/formatter';
 
-import { format } from 'date-fns';
-
 export function ListOrders() {
   const { isModalActive, handleSetStatusModal } = useOrdersContext();
 

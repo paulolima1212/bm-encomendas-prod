@@ -9,10 +9,12 @@ interface OrderContextProps {
   handleSetStatusModalOrder: () => void;
   handleSendMessage: () => void;
   handlerSetObsProduct: (value: string) => void;
+  handlerSetObsOrder: (value: string) => void;
   isModalActive: boolean;
   isModalOrdersActive: boolean;
   items: NewOrderProps;
   obsProduct: string;
+  obsOrder: string;
 }
 
 interface DataEncomenda {
@@ -24,6 +26,7 @@ interface DataEncomenda {
   statusOrder: string;
   totalOrder: string;
   orders_products: NewProdcutProps[];
+  obs?: string;
 }
 
 export const ordersContext = createContext({} as OrderContextProps);
@@ -33,6 +36,7 @@ export function OrderContextProvider({ children }: { children: ReactNode }) {
   const [isModalOrdersActive, setIsModalOrdersActive] = useState(false);
   const [items, setItems] = useState({} as NewOrderProps);
   const [obsProduct, setObsProduct] = useState('');
+  const [obsOrder, setObsOrder] = useState('');
 
   async function handleSetStatusModal(item: DataEncomenda) {
     try {
@@ -57,6 +61,10 @@ export function OrderContextProvider({ children }: { children: ReactNode }) {
     setObsProduct(obs);
   }
 
+  function handlerSetObsOrder(obs: string) {
+    setObsOrder(obs);
+  }
+
   return (
     <ordersContext.Provider
       value={{
@@ -64,10 +72,12 @@ export function OrderContextProvider({ children }: { children: ReactNode }) {
         handleSetStatusModalOrder,
         handleSendMessage,
         handlerSetObsProduct,
+        handlerSetObsOrder,
         isModalActive,
         items,
         isModalOrdersActive,
         obsProduct,
+        obsOrder,
       }}
     >
       {children}

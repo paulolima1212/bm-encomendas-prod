@@ -56,6 +56,7 @@ export interface NewOrderProps {
   products: NewProdcutProps[];
   statusOrder: string;
   totalOrder?: number;
+  obs?: string;
 }
 
 interface DataClientProps {

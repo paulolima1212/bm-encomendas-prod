@@ -312,3 +312,5 @@ export const InputContainerSmall = styled(BaseInput)`
 export const InputContainerBigger = styled(BaseInput)`
   width: 35rem;
 `;
+
+export const DialogRoot = styled(Dialog.Root)``;

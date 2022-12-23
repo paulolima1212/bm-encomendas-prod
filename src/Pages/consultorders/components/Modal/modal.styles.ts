@@ -100,3 +100,12 @@ export const ButtonContainer = styled.button`
   height: 3rem;
   transform: translateX(-50%);
 `;
+
+export const InfoOrder = styled.p`
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  border: 1px solid ${({ theme }) => theme['green-300']};
+`;

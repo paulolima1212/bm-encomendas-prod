@@ -3,6 +3,7 @@ import { useOrdersContext } from '../../../../hooks/useOrdersContext';
 import { dateFormatter, priceFormatter } from '../../../../utils/formatter';
 import {
   ButtonContainer,
+  InfoOrder,
   MainModalContainer,
   ModalContainer,
   TableContainer,
@@ -47,6 +48,7 @@ export function ModalListOrders() {
             <span>{dateFormatter.format(new Date(items.dateDelivery))}</span>
           </li>
         </UlContainer>
+        <InfoOrder>{items.obs !== 'nothing' && items.obs}</InfoOrder>
 
         <TableContainer>
           <table>
@@ -56,6 +58,7 @@ export function ModalListOrders() {
                 <th>Peso</th>
                 <th>Preço</th>
                 <th>Quantidade</th>
+                <th>OBS</th>
               </tr>
             </thead>
             <tbody>
@@ -66,6 +69,7 @@ export function ModalListOrders() {
                     <td>{product.weight}</td>
                     <td>{priceFormatter.format(Number(product.price))}</td>
                     <td>{product.quantity}</td>
+                    <td>{product.obs}</td>
                   </tr>
                 );
               })}

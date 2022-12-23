@@ -140,11 +140,11 @@ export function NewOrder() {
     };
 
     createNewOrder(activeOrder);
-    handlerSetObsOrder('');
 
     setNewOrder(activeOrder);
     setIdActiveOrder(0);
     setOrder([]);
+    handlerSetObsOrder('');
     reset();
     descPrincipal.current!.value = '';
     descVariant.current!.value = '';
